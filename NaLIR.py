@@ -17,20 +17,20 @@ from nalir import *
 config_json_text = '''{
     "connection":{
         "host": "localhost",
-        "password":"paulo",
-        "user":"paulo",
+        "password":"desenvolvimento123",
+        "user":"nalir",
         "database":"mas"
     },
     "loggingMode": "ERROR",
-    "zfiles_path":"/home/pr3martins/Desktop/zfiles",
-    "jars_path":"/home/pr3martins/nalir-sbbd/jars"
+    "zfiles_path":"/home/novello/nalir-sbbd/zfiles",
+    "jars_path":"/home/novello/nalir-sbbd/jars/new_jars"
 }
 '''
 config = ConfigHandler(reset=True,config_json_text=config_json_text)
 
 rdbms = RDBMS(config)
 
-query_line='return me the authors who have papers in VLDB conference before 2002 after 1995.'
+query_line='return me the keyword, which have been contained by the most publications in VLDB conference.'
 query = Query(query_line,rdbms.schema_graph)
 
 # ## Stanford Dependency Parser
@@ -43,7 +43,10 @@ query.parse_tree
 query.parse_tree.show()
 
 # ## Node Mapper
-
+import nltk
+#nltk.download('averaged_perceptron_tagger')
+#nltk.download('wordnet')
+#nltk.download('punkt')
 NodeMapper.phrase_process(query,rdbms,config)
 
 query.parse_tree.show()
@@ -70,4 +73,4 @@ query.query_tree.show()
 # **Important Node**: The error message is resultant of line 191 of file data_structure/block.py
 
 translate(query, rdbms)
-print(query.translated_sql)
+print('query: ', query.translated_sql)
